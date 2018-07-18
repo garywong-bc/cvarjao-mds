@@ -8,7 +8,7 @@ pipeline {
             }
             steps {
                 echo "Building ..."
-                sh '${GROOVY_HOME}/groovy -version'
+                sh '${GROOVY_HOME}/bin/groovy -version'
             }
         }
         stage('Quality Control') {
