@@ -55,7 +55,7 @@ app {
 vars {
     modules {
         'web-api' {
-            HOST = "mds-api-${app.git.changeId}-csnr-devops-lab-deploy.pathfinder.gov.bc.ca"
+            HOST = "mds-api-${vars.git.changeId}-${vars.deployment.namespace}.pathfinder.gov.bc.ca"
         }
     }
 }
@@ -64,9 +64,17 @@ environments {
     'dev' {
         vars {
             DB_PVC_SIZE = '1Gi'
+            git {
+                changeId = "${opt.'pr'}"
+            }
             deployment {
                 key = 'dev'
                 namespace = 'empr-mds-dev'
+            }
+            modules {
+                'web-api' {
+                    HOST = "mds-api-${vars.git.changeId}-${vars.deployment.namespace}.pathfinder.gov.bc.ca"
+                }
             }
         }
     }

@@ -20,8 +20,16 @@ pipeline {
         }
         stage('Deploy (DEV)') {
             agent { label 'master' }
+            input {
+                message "Should we continue with deployment to DEV?"
+                ok "Yes!"
+            }
+            environment {
+                GROOVY_HOME = tool name: 'groovy-2.5', type: 'hudson.plugins.groovy.GroovyInstallation'
+            }
             steps {
                 echo "Deploy (DEV) ..."
+                sh 'unset JAVA_OPTS; ${GROOVY_HOME}/bin/groovy pipeline/deploy.groovy --config=pipeline/config.groovy --pr=${CHANGE_ID} --env=dev'
             }
         }
         stage('Test (DEV)') {
@@ -56,6 +64,10 @@ pipeline {
         }
         stage('Acceptance') {
             agent { label 'master' }
+            input {
+                message "Should we continue with cleanup?"
+                ok "Yes!"
+            }
             steps {
                 echo "Acceptance ..."
             }
