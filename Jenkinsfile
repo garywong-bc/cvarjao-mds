@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Build') {
             agent { label 'master' }
-            tools {
-                groovy 'groovy-2.5' 
+            environment {
+                GROOVY_HOME = tool name: 'Groovy-2.4.9', type: 'hudson.plugins.groovy.GroovyInstallation'
             }
             steps {
                 echo "Building ..."
-                sh 'groovy -version'
+                sh '${GROOVY_HOME}/groovy -version'
             }
         }
         stage('Quality Control') {
