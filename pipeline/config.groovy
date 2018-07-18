@@ -15,7 +15,7 @@ app {
         name = "pr-${app.git.changeId}"
         prefix = "${app.name}-"
         suffix = "-${app.git.changeId}"
-        namespace = 'csnr-devops-lab-tools'
+        namespace = 'empr-mds-tools'
         timeoutInSeconds = 60*20 // 20 minutes
         templates = [
                 [
@@ -66,14 +66,24 @@ environments {
             DB_PVC_SIZE = '1Gi'
             deployment {
                 key = 'dev'
-                namespace = 'csnr-devops-lab-deploy'
+                namespace = 'empr-mds-dev'
             }
         }
     }
     'test' {
-
+        vars {
+            deployment {
+                key = 'test'
+                namespace = 'empr-mds-test'
+            }
+        }
     }
     'prod' {
-
+        vars {
+            deployment {
+                key = 'prod'
+                namespace = 'empr-mds-prod'
+            }
+        }
     }
 }
