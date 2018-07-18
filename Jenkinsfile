@@ -8,8 +8,8 @@ pipeline {
             }
             steps {
                 echo "Building ..."
-                sh 'unset JAVA_OPTS; ${GROOVY_HOME}/bin/groovy -version; pwd; ls -la ./'
-                sh 'unset JAVA_OPTS; ${GROOVY_HOME}/bin/groovy pipeline/build.groovy -h'
+                sh 'unset JAVA_OPTS; ${GROOVY_HOME}/bin/groovy -version; pwd; ls -la ./; env'
+                sh 'unset JAVA_OPTS; ${GROOVY_HOME}/bin/groovy pipeline/build.groovy --config=pipeline/config.groovy --pr=${CHANGE_ID}'
             }
         }
         stage('Quality Control') {
