@@ -13,7 +13,10 @@
       "kind": "ImageStream",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${NAME}${SUFFIX}",
+        "name": "${NAME}",
+        "labels": {
+          "shared": "true"
+        },
         "annotations": {
           "description": "Keeps track of changes in the application image"
         }
@@ -57,7 +60,7 @@
         "output": {
           "to": {
             "kind": "ImageStreamTag",
-            "name": "${NAME}${SUFFIX}:${OUTPUT_TAG_NAME}"
+            "name": "${NAME}:${OUTPUT_TAG_NAME}"
           }
         },
         "postCommit": {
