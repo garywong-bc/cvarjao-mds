@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             agent { label 'master' }
             environment {
-                GROOVY_HOME = tool name: 'Groovy-2.4.9', type: 'hudson.plugins.groovy.GroovyInstallation'
+                GROOVY_HOME = tool name: 'groovy-2.5', type: 'hudson.plugins.groovy.GroovyInstallation'
             }
             steps {
                 echo "Building ..."
