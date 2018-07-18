@@ -8,7 +8,7 @@ pipeline {
             }
             steps {
                 echo "Building ..."
-                sh '${GROOVY_HOME}/bin/groovy -version'
+                sh 'unset JAVA_OPTS; ${GROOVY_HOME}/bin/groovy -version'
             }
         }
         stage('Quality Control') {
