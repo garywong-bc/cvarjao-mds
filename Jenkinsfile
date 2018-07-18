@@ -3,8 +3,12 @@ pipeline {
     stages {
         stage('Build') {
             agent { label 'master' }
+            tools {
+                groovy 'groovy-2.5' 
+            }
             steps {
                 echo "Building ..."
+                sh 'groovy -version'
             }
         }
         stage('Quality Control') {
