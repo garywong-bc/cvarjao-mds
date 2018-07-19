@@ -6,13 +6,9 @@ pipeline {
     stages {
         stage('Build') {
             agent { label 'master' }
-            environment {
-                GROOVY_HOME = tool name: 'groovy-2.5', type: 'hudson.plugins.groovy.GroovyInstallation'
-            }
             steps {
                 echo "Building ..."
-                sh 'unset JAVA_OPTS; ${GROOVY_HOME}/bin/groovy -version; pwd; ls -la ./; env'
-                sh 'unset JAVA_OPTS; ${GROOVY_HOME}/bin/groovy pipeline/build.groovy --config=pipeline/config.groovy --pr=${CHANGE_ID}'
+                sh 'unset JAVA_OPTS; pipeline/gradlew -b pipeline/build.gradle cd-build -Pargs.--config=pipeline/config.groovy -Pargs.--pr=${CHANGE_ID} --no-build-cache --console=plain --no-daemon'
             }
         }
         stage('Quality Control') {

@@ -7,8 +7,13 @@ app {
         workDir = ['git', 'rev-parse', '--show-toplevel'].execute().text.trim()
         uri = ['git', 'config', '--get', 'remote.origin.url'].execute().text.trim()
         commit = ['git', 'rev-parse', 'HEAD'].execute().text.trim()
-        ref = ['bash','-c', 'git config branch.`git name-rev --name-only HEAD`.merge'].execute().text.trim()
+        //ref = opt.'branch'?:['bash','-c', 'git config branch.`git name-rev --name-only HEAD`.merge'].execute().text.trim()
         changeId = "${opt.'pr'}"
+        ref = opt.'branch'?:"refs/pull/${git.changeId}/head"
+        github {
+            owner = app.git.uri.tokenize('/')[2]
+            name = app.git.uri.tokenize('/')[3].tokenize('.git')[0]
+        }
     }
 
     build {
