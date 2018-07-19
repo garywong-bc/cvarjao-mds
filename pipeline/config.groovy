@@ -49,7 +49,18 @@ app {
                         'SOURCE_CONTEXT_DIR': "backend",
                         'SOURCE_REPOSITORY_URL': "${app.git.uri}"
                     ]
-                ],[
+                ],
+                [
+                    'file':'openshift/_nodejs.bc.json',
+                    'params':[
+                        'NAME':"mds-frontend",
+                        'SUFFIX': "${app.build.suffix}",
+                        'OUTPUT_TAG_NAME':"build-pr-${app.git.changeId}",
+                        'SOURCE_CONTEXT_DIR': "frontend",
+                        'SOURCE_REPOSITORY_URL': "${app.git.uri}"
+                    ]
+                ],
+                [
                     'file':'openshift/postgresql.bc.json',
                     'params':[
                         'NAME':"mds-postgresql",
@@ -74,6 +85,15 @@ app {
                         'SUFFIX': "${app.deployment.suffix}",
                         'TAG_NAME':"${app.deployment.name}",
                         'APPLICATION_DOMAIN': "${vars.modules.'mds-backend'.HOST}"
+                    ]
+                ],
+                [
+                    'file':'openshift/_nodejs.dc.json',
+                    'params':[
+                        'NAME':"mds-frontend",
+                        'SUFFIX': "${app.deployment.suffix}",
+                        'TAG_NAME':"${app.deployment.name}",
+                        'APPLICATION_DOMAIN': "${vars.modules.'mds-frontend'.HOST}"
                     ]
                 ],
                 [
@@ -115,6 +135,9 @@ environments {
             modules {
                 'mds-backend' {
                     HOST = "mds-backend-${vars.git.changeId}-${vars.deployment.namespace}.pathfinder.gov.bc.ca"
+                }
+                'mds-frontend' {
+                    HOST = "mds-frontend-${vars.git.changeId}-${vars.deployment.namespace}.pathfinder.gov.bc.ca"
                 }
             }
         }
