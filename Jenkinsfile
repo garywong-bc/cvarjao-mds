@@ -7,6 +7,10 @@ pipeline {
         stage('Build') {
             agent { label 'master' }
             steps {
+                echo "Aborting all running jobs ..."
+                script {
+                    abortAllPreviousBuildInProgress(currentBuild)
+                }
                 echo "Building ..."
                 sh 'unset JAVA_OPTS; pipeline/gradlew --no-build-cache --console=plain --no-daemon -b pipeline/build.gradle cd-build -Pargs.--config=pipeline/config.groovy -Pargs.--pr=${CHANGE_ID}'
             }
