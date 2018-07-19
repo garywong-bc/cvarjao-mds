@@ -1,7 +1,24 @@
 app {
     name = 'mds'
     version = 'snapshot'
-    environments = ["dev", "test", "prod"]
+    environments {
+        'build'{
+            namespace = 'empr-mds-tools'
+            disposable = true
+        }
+        'dev' {
+            namespace = 'empr-mds-dev'
+            disposable = true
+        }
+        'test' {
+            namespace = 'empr-mds-test'
+            disposable = false
+        }
+        'prod' {
+            namespace = 'empr-mds-prod'
+            disposable = false
+        }
+    }
 
     git {
         workDir = ['git', 'rev-parse', '--show-toplevel'].execute().text.trim()

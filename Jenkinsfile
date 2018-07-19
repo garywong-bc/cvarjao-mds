@@ -70,6 +70,7 @@ pipeline {
             }
             steps {
                 echo "Acceptance ..."
+                sh 'unset JAVA_OPTS; pipeline/gradlew --no-build-cache --console=plain --no-daemon -b pipeline/build.gradle cd-clean -Pargs.--config=pipeline/config.groovy -Pargs.--pr=${CHANGE_ID}'
             }
         }
     }
