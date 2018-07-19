@@ -38,7 +38,10 @@ def configSlurper = new ConfigSlurper("build")
 configSlurper.setBinding(['opt': opt])
 def config = configSlurper.parse(new File(opt.c).toURI().toURL())
 
+println config
+
 config.environments.each {String key, Map env->
+    println "Should we clean ${env.namespace}? ${env.disposable}"
     if (env.disposable == true){
         oc(['delete', 'all', '-l', "app=${config.app.name}-${config.app.changeId}", '-n', "${env.namespace}"])
         oc(['delete', 'secret,configmap,pvc', '-l', "app=${config.app.name}-${config.app.changeId}", '-n', "${env.namespace}"])
