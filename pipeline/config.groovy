@@ -34,7 +34,7 @@ app {
     }
 
     build {
-        name = "pr-${app.git.changeId}"
+        name = "build-pr-${app.git.changeId}"
         prefix = "${app.name}-"
         suffix = "-${app.git.changeId}"
         namespace = 'empr-mds-tools'
@@ -45,7 +45,7 @@ app {
                     'params':[
                         'NAME':"mds-backend",
                         'SUFFIX': "${app.build.suffix}",
-                        'OUTPUT_TAG_NAME':"pr-${app.git.changeId}",
+                        'OUTPUT_TAG_NAME':"build-pr-${app.git.changeId}",
                         'SOURCE_CONTEXT_DIR': "backend",
                         'SOURCE_REPOSITORY_URL': "${app.git.uri}"
                     ]
@@ -54,7 +54,7 @@ app {
                     'params':[
                         'NAME':"mds-postgresql",
                         'SUFFIX': "${app.build.suffix}",
-                        'TAG_NAME':"pr-${app.git.changeId}"
+                        'TAG_NAME':"build-pr-${app.git.changeId}"
                     ]
                 ]
         ]
