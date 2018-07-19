@@ -7,7 +7,7 @@ import groovy.cli.picocli.OptionAccessor
 import static OpenShiftHelper.oc
 import static OpenShiftHelper.ocGet
 
-@groovy.transform.SourceURI URI sourceURI
+@groovy.transform.SourceURI URI scriptSourceUri
 
 File scriptSourceFile = Paths.get(scriptSourceUri).toFile()
 
