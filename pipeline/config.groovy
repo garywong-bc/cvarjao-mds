@@ -58,6 +58,17 @@ app {
                         'TAG_NAME':"${app.deployment.name}",
                         'APPLICATION_DOMAIN': "${vars.modules.'mds-backend'.HOST}"
                     ]
+                ],
+                [
+                    'file':'openshift/postgresql.dc.json',
+                    'params':[
+                        'DATABASE_SERVICE_NAME':"mds-postgresql${app.deployment.suffix}",
+                        'IMAGE_STREAM_NAMESPACE':'',
+                        'IMAGE_STREAM_NAME':"mds-postgresql",
+                        'IMAGE_STREAM_VERSION':"${app.deployment.name}",
+                        'POSTGRESQL_DATABASE':'mds',
+                        'VOLUME_CAPACITY':"${vars.DB_PVC_SIZE}"
+                    ]
                 ]
         ]
     }
@@ -65,6 +76,7 @@ app {
 
 //Default Values (Should it default to DEV or PROD???)
 vars {
+    DB_PVC_SIZE = '1Gi'
     modules {
         'mds-backend' {
             HOST = "mds-backend-${vars.git.changeId}-${vars.deployment.namespace}.pathfinder.gov.bc.ca"
