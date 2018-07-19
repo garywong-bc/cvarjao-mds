@@ -1,7 +1,7 @@
 app {
     name = 'mds'
     version = 'snapshot'
-    environments {
+    namespaces { //can't call environments :(
         'build'{
             namespace = 'empr-mds-tools'
             disposable = true
