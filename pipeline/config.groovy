@@ -96,7 +96,7 @@ environments {
                 namespace = 'empr-mds-dev'
             }
             modules {
-                'web-backend' {
+                'mds-backend' {
                     HOST = "mds-backend-${vars.git.changeId}-${vars.deployment.namespace}.pathfinder.gov.bc.ca"
                 }
             }
