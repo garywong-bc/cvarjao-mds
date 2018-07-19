@@ -8,7 +8,7 @@ pipeline {
             agent { label 'master' }
             steps {
                 echo "Building ..."
-                sh 'unset JAVA_OPTS; pipeline/gradlew -b pipeline/build.gradle cd-build -Pargs.--config=pipeline/config.groovy -Pargs.--pr=${CHANGE_ID} --no-build-cache --console=plain --no-daemon'
+                sh 'unset JAVA_OPTS; pipeline/gradlew --no-build-cache --console=plain --no-daemon -b pipeline/build.gradle cd-build -Pargs.--config=pipeline/config.groovy -Pargs.--pr=${CHANGE_ID}'
             }
         }
         stage('Quality Control') {
@@ -23,12 +23,9 @@ pipeline {
                 message "Should we continue with deployment to DEV?"
                 ok "Yes!"
             }
-            environment {
-                GROOVY_HOME = tool name: 'groovy-2.5', type: 'hudson.plugins.groovy.GroovyInstallation'
-            }
             steps {
                 echo "Deploy (DEV) ..."
-                sh 'unset JAVA_OPTS; ${GROOVY_HOME}/bin/groovy pipeline/deploy.groovy --config=pipeline/config.groovy --pr=${CHANGE_ID} --env=dev'
+                sh 'unset JAVA_OPTS; pipeline/gradlew --no-build-cache --console=plain --no-daemon -b pipeline/build.gradle cd-deploy -Pargs.--config=pipeline/config.groovy -Pargs.--pr=${CHANGE_ID} -Pargs.--env=dev'
             }
         }
         stage('Test (DEV)') {

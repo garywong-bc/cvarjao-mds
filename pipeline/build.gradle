@@ -47,5 +47,18 @@ task('cd-build', type: JavaExec) {
     workingDir file(['git', 'rev-parse', '--show-toplevel'].execute().text.trim())
 }
 
+task('cd-deploy', type: JavaExec) {
+    description 'Run Groovy script'
+ 
+    // Set main property to name of Groovy script class.
+    main = 'Deploy'
+ 
+    // Set classpath for running the Groovy script.
+    classpath = sourceSets.main.runtimeClasspath
+ 
+    args project.getScriptArgs()
+
+    workingDir file(['git', 'rev-parse', '--show-toplevel'].execute().text.trim())
+}
 
 //tasks.getByName('show-args').shouldRunAfter tasks.getByName('oc-build')
