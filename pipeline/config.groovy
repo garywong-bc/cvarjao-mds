@@ -26,13 +26,20 @@ app {
                 [
                     'file':'openshift/_nodejs.bc.json',
                     'params':[
-                        'NAME':"mds-web-api",
+                        'NAME':"mds-backend",
                         'SUFFIX': "${app.build.suffix}",
                         'OUTPUT_TAG_NAME':"pr-${app.git.changeId}",
-                        'SOURCE_CONTEXT_DIR': "web-api",
+                        'SOURCE_CONTEXT_DIR': "backend",
                         'SOURCE_REPOSITORY_URL': "${app.git.uri}"
                     ]
-                ],
+                ],[
+                    'file':'openshift/postgresql.bc.json',
+                    'params':[
+                        'NAME':"mds-postgresql",
+                        'SUFFIX': "${app.build.suffix}",
+                        'TAG_NAME':"pr-${app.git.changeId}"
+                    ]
+                ]
         ]
     }
 
@@ -46,10 +53,10 @@ app {
                 [
                     'file':'openshift/_nodejs.dc.json',
                     'params':[
-                        'NAME':"mds-web-api",
+                        'NAME':"mds-backend",
                         'SUFFIX': "${app.deployment.suffix}",
                         'TAG_NAME':"${app.deployment.name}",
-                        'APPLICATION_DOMAIN': "${vars.modules.'web-api'.HOST}"
+                        'APPLICATION_DOMAIN': "${vars.modules.'mds-backend'.HOST}"
                     ]
                 ]
         ]
@@ -59,8 +66,8 @@ app {
 //Default Values (Should it default to DEV or PROD???)
 vars {
     modules {
-        'web-api' {
-            HOST = "mds-api-${vars.git.changeId}-${vars.deployment.namespace}.pathfinder.gov.bc.ca"
+        'mds-backend' {
+            HOST = "mds-backend-${vars.git.changeId}-${vars.deployment.namespace}.pathfinder.gov.bc.ca"
         }
     }
 }
@@ -77,8 +84,8 @@ environments {
                 namespace = 'empr-mds-dev'
             }
             modules {
-                'web-api' {
-                    HOST = "mds-api-${vars.git.changeId}-${vars.deployment.namespace}.pathfinder.gov.bc.ca"
+                'web-backend' {
+                    HOST = "mds-backend-${vars.git.changeId}-${vars.deployment.namespace}.pathfinder.gov.bc.ca"
                 }
             }
         }
