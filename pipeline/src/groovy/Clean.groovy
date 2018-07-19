@@ -48,7 +48,7 @@ config.app.namespaces.each {String key, Map env->
 
         Map ret = ocGet(['is', '-l', "app-name=${config.app.name}", '-n', "${env.namespace}"])
         for(Map imageStream:ret.items){
-                oc(['delete', 'istag', "${imageStream.metadata.name}:-${key}-pr-${config.app.git.changeId}", '--ignore-not-found=true', '-n', "${env.namespace}"])
+                oc(['delete', 'istag', "${imageStream.metadata.name}:${key}-pr-${config.app.git.changeId}", '--ignore-not-found=true', '-n', "${env.namespace}"])
         }
     }
 }
